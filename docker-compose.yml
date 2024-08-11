@@ -15,8 +15,9 @@ services:
     image: mysql:8.3.0
     container_name: mysql
     environment:
-      MYSQL_ROOT_PASSWORD: root
+      MYSQL_ROOT_PASSWORD: passwd
     ports:
-      - 3306:3306
+      - "3306:3306"
     volumes:
       - ./database/order/mysql/data:/var/lib/mysql
+      - ./docker/mysql/order_service/init.sql:/docker-entrypoint-initdb.d/init.sql
