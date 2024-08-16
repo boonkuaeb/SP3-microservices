@@ -62,4 +62,27 @@ class OrderServiceApplicationTests {
 		assertThat(responseBodyString, Matchers.is("Order Placed Successfully"));
 	}
 
+	@Test
+	void shouldSubmitOrderNotInStock() {
+		String submitOrderJson = """
+                {
+                     "skuCode": "iphone_15",
+                     "price": 1000,
+                     "quantity": 101
+                }
+                """;
+
+		InventoryClientStub.stubInventoryClient("iphone_15",101);
+
+
+		RestAssured.given()
+				.contentType("application/json")
+				.body(submitOrderJson)
+				.when()
+				.post("/api/order")
+				.then()
+				.log().all()
+				.statusCode(500);
+	}
+
 }
