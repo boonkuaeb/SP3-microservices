@@ -1,8 +1,8 @@
 version: '4'
 services:
-  mongodb:
+  mongodb_product:
     image: mongo:7.0.5
-    container_name: mongodb
+    container_name: mongodb_product
     ports:
       - "27017:27017"
     environment:
@@ -11,9 +11,9 @@ services:
       MONGO_INITDB_DATABASE: product-service
     volumes:
       - ./database/product/mongodb/data:/data/db
-  mysql:
+  mysql_order:
     image: mysql:8.3.0
-    container_name: mysql
+    container_name: mysql_order
     environment:
       MYSQL_ROOT_PASSWORD: passwd
     ports:
@@ -21,3 +21,13 @@ services:
     volumes:
       - ./database/order/mysql/data:/var/lib/mysql
       - ./docker/mysql/order_service/init.sql:/docker-entrypoint-initdb.d/init.sql
+  mysql_inventory:
+    image: mysql:8.3.0
+    container_name: mysql_inventory
+    environment:
+      MYSQL_ROOT_PASSWORD: passwd
+    ports:
+      - "3308:3306"
+    volumes:
+      - ./database/inventory/mysql/data:/var/lib/mysql
+      - ./docker/mysql/inventory_service/init.sql:/docker-entrypoint-initdb.d/init.sql
