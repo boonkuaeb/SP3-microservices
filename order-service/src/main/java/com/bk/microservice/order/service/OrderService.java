@@ -14,9 +14,9 @@ import java.util.UUID;
 public class OrderService {
     private final OrderRepository orderRepository;
     private final InventoryClient inventoryClient;
-    public void placeOrder(OrderRequest orderRequest)
-    {
-        var isProductInStock =  inventoryClient.isInStock(orderRequest.skuCode(), orderRequest.quantity());
+
+    public void placeOrder(OrderRequest orderRequest) {
+        var isProductInStock = inventoryClient.isInStock(orderRequest.skuCode(), orderRequest.quantity());
         if (isProductInStock) {
             // Map OrderRequest to Order object
             Order order = new Order();
@@ -27,8 +27,8 @@ public class OrderService {
 
             // Save to Order to OrderRepository
             orderRepository.save(order);
-        }else {
-            throw new RuntimeException("Product with Sku "+orderRequest.skuCode()+" is not in stock");
+        } else {
+            throw new RuntimeException("Product with Sku " + orderRequest.skuCode() + " is not in stock");
         }
     }
 }
