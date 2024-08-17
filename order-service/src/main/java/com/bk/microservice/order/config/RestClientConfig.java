@@ -2,11 +2,16 @@ package com.bk.microservice.order.config;
 
 import com.bk.microservice.order.client.InventoryClient;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.web.client.ClientHttpRequestFactories;
+import org.springframework.boot.web.client.ClientHttpRequestFactorySettings;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.client.ClientHttpRequestFactory;
 import org.springframework.web.client.RestClient;
 import org.springframework.web.client.support.RestClientAdapter;
 import org.springframework.web.service.invoker.HttpServiceProxyFactory;
+
+import java.time.Duration;
 
 @Configuration
 public class RestClientConfig {
@@ -18,6 +23,7 @@ public class RestClientConfig {
     public InventoryClient inventoryClient() {
         RestClient restClient = RestClient.builder()
                 .baseUrl(inventoryServiceUrl)
+                .requestFactory(getClientHttpRequestFactory())
                 .build();
 
         var restClientAdapter = RestClientAdapter.create(restClient);
@@ -25,4 +31,11 @@ public class RestClientConfig {
         return httpServiceProxyFactory.createClient(InventoryClient.class);
     }
 
+    private ClientHttpRequestFactory getClientHttpRequestFactory()
+    {
+        ClientHttpRequestFactorySettings clientHttpRequestFactorySettings = ClientHttpRequestFactorySettings.DEFAULTS
+                .withConnectTimeout(Duration.ofSeconds(3))
+                .withReadTimeout(Duration.ofSeconds(3));
+        return ClientHttpRequestFactories.get(clientHttpRequestFactorySettings);
+    }
 }
