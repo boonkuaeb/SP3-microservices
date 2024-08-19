@@ -22,10 +22,14 @@
         @for (product of products; track product.id) {
           <li class="mb-2 p-4 bg-gray-100 rounded-lg shadow-sm flex justify-between items-center">
             <div>
-              <span class="font-semibold">{{ product.name }}</span> -
+              <span class="font-semibold">{{ product.name }}</span>
+              <br/>
+              <span class="text-gray-600">
+                skuCode: {{ product.skuCode }}
+              </span>
+              <br/>
               <span class="text-gray-600">
                 Price: {{ product.price }}
-                skuCode: {{ product.skuCode }}
               </span>
               <br/>
               <span >

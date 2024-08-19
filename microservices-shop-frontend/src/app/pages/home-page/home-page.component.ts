@@ -50,10 +50,11 @@ export class HomePageComponent implements OnInit {
   orderProduct(product: Product, quantity: string) {
 
     this.oidcSecurityService.userData$.subscribe(result => {
+      // console.log(result);
       const userDetails = {
         email: result.userData.email,
-        firstName: result.userData.firstName,
-        lastName: result.userData.lastName
+        firstName: result.userData.given_name,
+        lastName: result.userData.family_name
       };
 
       if(!quantity) {
@@ -61,7 +62,7 @@ export class HomePageComponent implements OnInit {
         this.orderSuccess = false;
         this.quantityIsNull = true;
       } else {
-        console.log("skuCode"+product.skuCode);
+        // console.log("skuCode:"+product.skuCode);
         const order: Order = {
           skuCode: product.skuCode,
           price: product.price,
