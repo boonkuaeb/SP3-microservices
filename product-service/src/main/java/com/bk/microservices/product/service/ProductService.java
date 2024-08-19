@@ -26,13 +26,13 @@ public class ProductService {
         productRepository.save(product);
         log.info("Product created successfully, {}", product.getName());
 
-        return new ProductResponse(product.getId(), product.getName(), product.getDescription(), product.getPrice());
+        return new ProductResponse(product.getId(), product.getName(), product.getDescription(),product.getSkuCode(), product.getPrice());
     }
 
     public List<ProductResponse> getAllProducts() {
         return productRepository.findAll()
                 .stream()
-                .map(product -> new ProductResponse(product.getId(), product.getName(), product.getDescription(), product.getPrice()))
+                .map(product -> new ProductResponse(product.getId(), product.getName(), product.getDescription(),product.getSkuCode(), product.getPrice()))
                 .toList();
     }
 }
