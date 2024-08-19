@@ -80,3 +80,12 @@ resilience4j.timelimiter.configs.default.timeout-duration: 3s
 #    Then trigger to timeout-duration
 resilience4j.retry.configs.default.max-attempts: 3
 resilience4j.retry.configs.default.wait-duration: 2s
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+management.metrics.distribution.percentiles-histogram.http.server.requests: true
+management.observations.key-values.application: ${spring.application.name}
+management.tracing.sampling.probability: 1.0
