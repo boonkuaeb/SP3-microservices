@@ -1,0 +1,14 @@
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: cors_route
+          uri: http://localhost:4200
+          metadata:
+            cors:
+              allowedOrigins: '*'
+              allowedMethods:
+                - GET
+                - POST
+              allowedHeaders: '*'
+              maxAge: 30
